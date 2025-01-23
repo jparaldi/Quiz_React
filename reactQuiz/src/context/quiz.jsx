@@ -36,6 +36,21 @@ const quizReducer = (state, action) => {
                     }
         case "NEW_GAME":
             return initialState
+        case "CHECK_ANSWER":
+            if(state.answerSelected){
+                return state;
+            }
+            const answer = action.payload.answer;
+            const option = action.payload.option;
+            let correctAnswer = false;
+            if(answer === option){
+                correctAnswer = true;
+            }
+            return{
+                ...state,
+                score: correctAnswer ? state.score + 1 : state.score,
+                answerSelected: option,
+            }
         default:
             return state;
     }
